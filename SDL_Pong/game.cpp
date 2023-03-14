@@ -3,18 +3,21 @@
 #include <stdio.h>
 
 #include "player.h"
+#include "playerinputcomponent.h"
 #include "ball.h"
 #include "paddle.h"
 
-Game::Game(): renderer(nullptr), window(nullptr)
-{ 
-	Player *player = new Player(50, WINDOW_HEIGHT / 2);
+Game::Game() : renderer(nullptr), window(nullptr), quitGame(false)
+{
+	Player* player = new Player(50, WINDOW_HEIGHT / 2, new PlayerInputComponent());
 	Paddle* enemy = new Paddle(WINDOW_WIDTH - 50, WINDOW_HEIGHT / 2);
-	Ball *ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	Ball* ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 	gameObjects[PLAYER_INDEX] = player;
 	gameObjects[ENEMY_INDEX] = enemy;
 	gameObjects[BALL_INDEX] = ball;
+
+	sdlEvent = new SDL_Event;
 }
 
 Game::~Game()
@@ -31,6 +34,8 @@ Game::~Game()
 		delete gameObjects[i];
 		gameObjects[i] = nullptr;
 	}
+
+	delete sdlEvent;
 }
 
 bool Game::initializeSDLSystems()
@@ -66,6 +71,29 @@ bool Game::initializeSDLSystems()
 	}
 
 	return success;
+}
+
+void Game::gameLoop()
+{
+	while (!quitGame)
+	{
+		handleEventLoop(quitGame);
+		update();
+		draw();
+	}
+}
+
+void Game::handleEventLoop(bool& quitGame) const
+{
+	while (SDL_PollEvent(sdlEvent) != 0)
+	{
+		if (sdlEvent->type == SDL_QUIT)
+		{
+			quitGame = true;
+		}
+
+		getPlayer()->handleInput(sdlEvent);
+	}
 }
 
 void Game::update() const
