@@ -3,6 +3,6 @@ class InputComponent
 {
 public:
 	InputComponent();
-	virtual void handleInput(class Paddle* paddle, union SDL_Event* sdlEvent) = 0;
+	virtual void handleInput(class Paddle* paddle, double deltaTime) = 0;
 };
 

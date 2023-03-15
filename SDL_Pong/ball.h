@@ -6,7 +6,7 @@ class Ball: public GameObject
 {
 public:
 	Ball(float _x, float _y, class Paddle* leftPaddle, Paddle* rightPaddle);
-	void update();
+	void update(double deltaTime);
 
 	static const float SIDE_LENGTH;
 	void draw(struct SDL_Renderer* renderer) const;
@@ -15,6 +15,7 @@ private:
 	bool hasHitPaddle(Paddle* paddle);
 	void handlePaddleHit(Paddle* paddleHit);
 	void reset();
+	void setInitialSpeed();
 
 	float xSpeed;
 	float ySpeed;
@@ -29,7 +30,7 @@ private:
 		DOWN_DIRECTION = 1
 	} BallDirection;
 
-	const float INITIAL_BALL_SPEED = 2;
+	const float INITIAL_BALL_SPEED = 2000;
 	const float SPEED_MULTIPLIER = 1.1;
 	const float MAX_BOUNCE_ANGLE = 1.309;
 };

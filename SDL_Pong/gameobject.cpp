@@ -26,7 +26,7 @@ void GameObject::setY(float _y)
 	y = _y;
 }
 
-void GameObject::update()
+void GameObject::update(double deltaTime)
 { }
 
 void GameObject::draw(SDL_Renderer* renderer) const

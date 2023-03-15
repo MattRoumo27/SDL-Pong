@@ -9,14 +9,13 @@ const float Ball::SIDE_LENGTH = 10;
 
 Ball::Ball(float _x, float _y, Paddle* leftPaddle, Paddle* rightPaddle) : GameObject(_x, _y), leftPaddle(leftPaddle), rightPaddle(rightPaddle)
 {
-	xSpeed = RIGHT_DIRECTION * INITIAL_BALL_SPEED;
-	ySpeed = -3 + (rand() % 3);
+	setInitialSpeed();
 }
 
-void Ball::update()
+void Ball::update(double deltaTime)
 {
-	setY(getY() + ySpeed);
-	setX(getX() + xSpeed);
+	setY(getY() + ySpeed * (float)deltaTime);
+	setX(getX() + xSpeed * (float)deltaTime);
 
 	if (getY() < 0)
 	{
@@ -77,8 +76,13 @@ void Ball::reset()
 	setX((float)Game::WINDOW_WIDTH / 2);
 	setY((float)Game::WINDOW_HEIGHT / 2);
 
+	setInitialSpeed();
+}
+
+void Ball::setInitialSpeed()
+{
 	xSpeed = RIGHT_DIRECTION * INITIAL_BALL_SPEED;
-	ySpeed = ySpeed = -3 + (rand() % 3);
+	ySpeed = (-3 + (rand() % 3)) * (INITIAL_BALL_SPEED / 2);
 }
 
 void Ball::draw(SDL_Renderer* renderer) const

@@ -5,20 +5,16 @@
 PlayerInputComponent::PlayerInputComponent()
 { }
 
-void PlayerInputComponent::handleInput(Paddle* player, SDL_Event* sdlEvent)
+void PlayerInputComponent::handleInput(Paddle* player, double deltaTime)
 {
-	if (sdlEvent->type == SDL_KEYDOWN && sdlEvent->key.repeat == 0)
+	const Uint8* keyState = SDL_GetKeyboardState(nullptr);
+
+	if (keyState[SDL_SCANCODE_W])
 	{
-		switch (sdlEvent->key.keysym.sym)
-		{
-			case SDLK_w:
-			case SDLK_UP:
-				player->setY(player->getY() - Paddle::MOVE_SPEED);
-				break;
-			case SDLK_s:
-			case SDLK_DOWN:
-				player->setY(player->getY() + Paddle::MOVE_SPEED);
-				break;
-		}
+		player->setY(player->getY() - Paddle::MOVE_SPEED * (float)deltaTime);
+	}
+	else if (keyState[SDL_SCANCODE_S])
+	{
+		player->setY(player->getY() + Paddle::MOVE_SPEED * (float)deltaTime);
 	}
 }

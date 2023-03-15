@@ -87,12 +87,12 @@ void Game::gameLoop()
 		previous = current;
 		lag += elapsed;
 
-		handleEventLoop(quitGame);
-		getEnemy()->handleInput(sdlEvent);
+		double deltaTime = elapsed / 1000.0f;
+		handleEventLoop(quitGame, deltaTime);
 
 		while (lag >= MS_PER_UPDATE)
 		{
-			update();
+			update(deltaTime);
 			lag -= MS_PER_UPDATE;
 		}
 
@@ -100,7 +100,7 @@ void Game::gameLoop()
 	}
 }
 
-void Game::handleEventLoop(bool& quitGame) const
+void Game::handleEventLoop(bool& quitGame, double deltaTime) const
 {
 	while (SDL_PollEvent(sdlEvent) != 0)
 	{
@@ -108,16 +108,17 @@ void Game::handleEventLoop(bool& quitGame) const
 		{
 			quitGame = true;
 		}
-
-		getPlayer()->handleInput(sdlEvent);
 	}
+
+	getPlayer()->handleInput(deltaTime);
+	getEnemy()->handleInput(deltaTime);
 }
 
-void Game::update() const
+void Game::update(double deltaTime) const
 {
 	for (int i = 0; i < NUMBER_OF_GAME_OBJECTS; i++)
 	{
-		gameObjects[i]->update();
+		gameObjects[i]->update(deltaTime);
 	}
 }
 

@@ -5,11 +5,9 @@ class AIInputComponent : public InputComponent
 {
 public:
 	AIInputComponent(class Ball* ball);
-	virtual void handleInput(class Paddle* paddle, union SDL_Event* sdlEvent);
+	virtual void handleInput(class Paddle* paddle, double deltaTime);
 
 private:
 	Ball* ball;
-
-	const float AI_MOVE_SPEED = 1;
 };
 

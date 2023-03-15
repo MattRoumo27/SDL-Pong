@@ -6,6 +6,7 @@
 const float Paddle::PADDLE_WIDTH = 10;
 const float Paddle::PADDLE_HEIGHT = 60;
 const float Paddle::PADDLE_OFFSET = 50;
+const float Paddle::MOVE_SPEED = 300.f;
 
 Paddle::Paddle(float _x, float _y) : GameObject(_x, _y), inputComponent(nullptr)
 { }
@@ -18,7 +19,7 @@ Paddle::~Paddle()
 	delete inputComponent;
 }
 
-void Paddle::update()
+void Paddle::update(double deltaTime)
 {
 	if (getY() <= 0)
 	{
@@ -35,9 +36,9 @@ void Paddle::setInputComponent(InputComponent* _inputComponent)
 	inputComponent = _inputComponent;
 }
 
-void Paddle::handleInput(SDL_Event* sdlEvent)
+void Paddle::handleInput(double deltaTime)
 {
-	inputComponent->handleInput(this, sdlEvent);
+	inputComponent->handleInput(this, deltaTime);
 }
 
 float Paddle::getBottomYCoordinate() const

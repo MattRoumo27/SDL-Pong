@@ -14,8 +14,8 @@ public:
 
 	bool initializeSDLSystems();
 	void gameLoop();
-	void handleEventLoop(bool& quitGame) const;
-	void update() const;
+	void handleEventLoop(bool& quitGame, double deltaTime) const;
+	void update(double deltaTime) const;
 	void draw() const;
 	SDL_Window* getWindow() const;
 	SDL_Renderer* getRenderer() const;
