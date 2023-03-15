@@ -150,6 +150,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="paddle.cpp" />
     <ClCompile Include="playerinputcomponent.cpp" />
+    <ClCompile Include="pvector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aiinputcomponent.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="inputcomponent.h" />
     <ClInclude Include="paddle.h" />
     <ClInclude Include="playerinputcomponent.h" />
+    <ClInclude Include="pvector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

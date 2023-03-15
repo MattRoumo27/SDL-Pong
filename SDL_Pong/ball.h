@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gameobject.h"
+#include "pvector.h"
 
 class Ball: public GameObject
 {
@@ -17,8 +18,7 @@ private:
 	void reset();
 	void setInitialSpeed();
 
-	float xSpeed;
-	float ySpeed;
+	PVector speedVector;
 	Paddle* leftPaddle;
 	Paddle* rightPaddle;
 

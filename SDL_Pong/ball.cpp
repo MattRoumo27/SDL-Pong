@@ -14,20 +14,20 @@ Ball::Ball(float _x, float _y, Paddle* leftPaddle, Paddle* rightPaddle) : GameOb
 
 void Ball::update(double deltaTime)
 {
-	setY(getY() + ySpeed * (float)deltaTime);
-	setX(getX() + xSpeed * (float)deltaTime);
+	position.x += speedVector.x * (float)deltaTime;
+	position.y += speedVector.y * (float)deltaTime;
 
-	if (getY() < 0)
+	if (position.y < 0)
 	{
-		setY(0);
-		ySpeed *= -1;
+		position.y = 0;
+		speedVector.y *= -1;
 	}
-	else if ((getY() + SIDE_LENGTH) > Game::WINDOW_HEIGHT)
+	else if ((position.y + SIDE_LENGTH) > Game::WINDOW_HEIGHT)
 	{
-		setY(Game::WINDOW_HEIGHT - SIDE_LENGTH);
-		ySpeed *= -1;
+		position.y = Game::WINDOW_HEIGHT - SIDE_LENGTH;
+		speedVector.y *= -1;
 	}
-	else if (getX() < 0 || (getX() + SIDE_LENGTH) > Game::WINDOW_WIDTH)
+	else if (position.x < 0 || (position.x + SIDE_LENGTH) > Game::WINDOW_WIDTH)
 	{
 		reset();
 	}
@@ -51,43 +51,43 @@ void Ball::update(double deltaTime)
 
 bool Ball::hasHitPaddle(Paddle* paddle)
 {
-	return getX() < paddle->getX() + Paddle::PADDLE_WIDTH &&
-		getX() + SIDE_LENGTH > paddle->getX() &&
-		getY() < paddle->getY() + Paddle::PADDLE_HEIGHT &&
-		getY() + SIDE_LENGTH > paddle->getY();
+	return position.x < paddle->position.x + Paddle::PADDLE_WIDTH &&
+		position.x + SIDE_LENGTH > paddle->position.x &&
+		position.y < paddle->position.y + Paddle::PADDLE_HEIGHT &&
+		position.y + SIDE_LENGTH > paddle->position.y;
 }
 
 void Ball::handlePaddleHit(Paddle* paddleHit)
 {
-	if (xSpeed > 0)
+	if (speedVector.x > 0)
 	{
-		xSpeed *= -1 * SPEED_MULTIPLIER;
-		setX(paddleHit->getX() - SIDE_LENGTH);
+		speedVector.x *= -1 * SPEED_MULTIPLIER;
+		position.x = paddleHit->position.x - SIDE_LENGTH;
 	}
 	else
 	{
-		xSpeed *= -1 * SPEED_MULTIPLIER;
-		setX(paddleHit->getX() + Paddle::PADDLE_WIDTH + SIDE_LENGTH);
+		speedVector.x *= -1 * SPEED_MULTIPLIER;
+		position.x = paddleHit->position.x + Paddle::PADDLE_WIDTH + SIDE_LENGTH;
 	}
 }
 
 void Ball::reset()
 {
-	setX((float)Game::WINDOW_WIDTH / 2);
-	setY((float)Game::WINDOW_HEIGHT / 2);
+	position.x = (float)Game::WINDOW_WIDTH / 2;
+	position.y = (float)Game::WINDOW_HEIGHT / 2;
 
 	setInitialSpeed();
 }
 
 void Ball::setInitialSpeed()
 {
-	xSpeed = RIGHT_DIRECTION * INITIAL_BALL_SPEED;
-	ySpeed = (-3 + (rand() % 3)) * (INITIAL_BALL_SPEED / 2);
+	speedVector.x = RIGHT_DIRECTION * INITIAL_BALL_SPEED;
+	speedVector.y = (-3 + (rand() % 3)) * (INITIAL_BALL_SPEED / 2);
 }
 
 void Ball::draw(SDL_Renderer* renderer) const
 {
-	SDL_Rect ballRectangle = { getX(), getY(), SIDE_LENGTH, SIDE_LENGTH };
+	SDL_Rect ballRectangle = { position.x, position.y, SIDE_LENGTH, SIDE_LENGTH };
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderFillRect(renderer, &ballRectangle);
 }

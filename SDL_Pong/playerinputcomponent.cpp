@@ -11,10 +11,11 @@ void PlayerInputComponent::handleInput(Paddle* player, double deltaTime)
 
 	if (keyState[SDL_SCANCODE_W])
 	{
-		player->setY(player->getY() - Paddle::MOVE_SPEED * (float)deltaTime);
+		player->position.y -= Paddle::MOVE_SPEED * (float)deltaTime;
+
 	}
 	else if (keyState[SDL_SCANCODE_S])
 	{
-		player->setY(player->getY() + Paddle::MOVE_SPEED * (float)deltaTime);
+		player->position.y += Paddle::MOVE_SPEED * (float)deltaTime;
 	}
 }

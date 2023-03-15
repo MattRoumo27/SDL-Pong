@@ -21,13 +21,13 @@ Paddle::~Paddle()
 
 void Paddle::update(double deltaTime)
 {
-	if (getY() <= 0)
+	if (position.y <= 0)
 	{
-		setY(0);
+		position.y = 0;
 	}
 	else if (getBottomYCoordinate() >= Game::WINDOW_HEIGHT)
 	{
-		setY(Game::WINDOW_HEIGHT - PADDLE_HEIGHT);
+		position.y = Game::WINDOW_HEIGHT - PADDLE_HEIGHT;
 	}
 }
 
@@ -43,12 +43,12 @@ void Paddle::handleInput(double deltaTime)
 
 float Paddle::getBottomYCoordinate() const
 {
-	return getY() + PADDLE_HEIGHT;
+	return position.y + PADDLE_HEIGHT;
 }
 
 void Paddle::draw(SDL_Renderer* renderer) const
 {
-	SDL_Rect paddleRectangle = { getX(), getY(), PADDLE_WIDTH, PADDLE_HEIGHT };
+	SDL_Rect paddleRectangle = { position.x, position.y, PADDLE_WIDTH, PADDLE_HEIGHT };
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderFillRect(renderer, &paddleRectangle);
 }
