@@ -5,6 +5,9 @@
 Paddle::Paddle(float _x, float _y) : GameObject(_x, _y)
 { }
 
+const float Paddle::PADDLE_WIDTH = 10;
+const float Paddle::PADDLE_HEIGHT = 60;
+
 void Paddle::update()
 {
 	if (getY() <= 0)

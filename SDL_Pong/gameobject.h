@@ -13,9 +13,6 @@ public:
 	void setX(float _x);
 	void setY(float _y);
 
-protected:
-	bool haveObjectsCollided(GameObject* otherObject);
-
 private:
 	double x;
 	double y;

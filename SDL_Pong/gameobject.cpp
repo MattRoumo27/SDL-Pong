@@ -26,11 +26,6 @@ void GameObject::setY(float _y)
 	y = _y;
 }
 
-bool GameObject::haveObjectsCollided(GameObject* otherObject)
-{
-	return false;
-}
-
 void GameObject::update()
 { }
 
