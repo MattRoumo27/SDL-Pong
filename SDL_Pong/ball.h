@@ -5,15 +5,19 @@
 class Ball: public GameObject
 {
 public:
-	Ball(int _x, int _y);
+	Ball(float _x, float _y, class Paddle* leftPaddle, Paddle* rightPaddle);
 	void update();
 
 	const int SIDE_LENGTH = 10;
 	void draw(struct SDL_Renderer* renderer) const;
 
 private:
-	int xSpeed;
-	int ySpeed;
+	void handlePaddleHit(Paddle* paddleHit);
+
+	float xSpeed;
+	float ySpeed;
+	Paddle* leftPaddle;
+	Paddle* rightPaddle;
 
 	typedef enum
 	{
@@ -23,6 +27,6 @@ private:
 		DOWN_DIRECTION = 1
 	} BallDirection;
 
-	const int INITIAL_BALL_SPEED = 1;
+	const float INITIAL_BALL_SPEED = 1;
 };
 

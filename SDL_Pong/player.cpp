@@ -2,7 +2,7 @@
 #include "playerinputcomponent.h"
 #include <SDL.h>
 
-Player::Player(int _x, int _y, PlayerInputComponent* inputComponent): Paddle(_x, _y), inputComponent(inputComponent)
+Player::Player(float _x, float _y, PlayerInputComponent* inputComponent): Paddle(_x, _y), inputComponent(inputComponent)
 { }
 
 Player::~Player()

@@ -31,6 +31,7 @@ private:
 	SDL_Event* sdlEvent;
 	GameObject* gameObjects[NUMBER_OF_GAME_OBJECTS];
 	bool quitGame;
+	const float MS_PER_UPDATE = 10;
 
 	typedef enum
 	{

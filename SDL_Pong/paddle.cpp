@@ -2,7 +2,7 @@
 #include "game.h"
 #include <SDL.h>
 
-Paddle::Paddle(int _x, int _y) : GameObject(_x, _y)
+Paddle::Paddle(float _x, float _y) : GameObject(_x, _y)
 { }
 
 void Paddle::update()
@@ -17,7 +17,7 @@ void Paddle::update()
 	}
 }
 
-int Paddle::getBottomYCoordinate() const
+float Paddle::getBottomYCoordinate() const
 {
 	return getY() + PADDLE_HEIGHT;
 }

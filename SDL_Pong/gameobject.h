@@ -3,18 +3,21 @@ class GameObject
 {
 public:
 	GameObject();
-	GameObject(int _x, int _y);
+	GameObject(float _x, float _y);
 
 	virtual void update();
 	virtual void draw(struct SDL_Renderer* renderer) const;
 
-	int getX() const;
-	int getY() const;
-	void setX(int _x);
-	void setY(int _y);
+	float getX() const;
+	float getY() const;
+	void setX(float _x);
+	void setY(float _y);
+
+protected:
+	bool haveObjectsCollided(GameObject* otherObject);
 
 private:
-	int x;
-	int y;
+	double x;
+	double y;
 };
 

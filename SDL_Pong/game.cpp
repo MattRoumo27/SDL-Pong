@@ -11,7 +11,7 @@ Game::Game() : renderer(nullptr), window(nullptr), quitGame(false)
 {
 	Player* player = new Player(50, WINDOW_HEIGHT / 2, new PlayerInputComponent());
 	Paddle* enemy = new Paddle(WINDOW_WIDTH - 50, WINDOW_HEIGHT / 2);
-	Ball* ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	Ball* ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, player, enemy);
 
 	gameObjects[PLAYER_INDEX] = player;
 	gameObjects[ENEMY_INDEX] = enemy;
@@ -75,10 +75,23 @@ bool Game::initializeSDLSystems()
 
 void Game::gameLoop()
 {
+	double previous = SDL_GetTicks64();
+	double lag = 0.0;
 	while (!quitGame)
 	{
+		double current = SDL_GetTicks64();
+		double elapsed = current - previous;
+		previous = current;
+		lag += elapsed;
+
 		handleEventLoop(quitGame);
-		update();
+
+		while (lag >= MS_PER_UPDATE)
+		{
+			update();
+			lag -= MS_PER_UPDATE;
+		}
+
 		draw();
 	}
 }

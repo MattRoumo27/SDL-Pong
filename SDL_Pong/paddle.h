@@ -4,14 +4,14 @@
 class Paddle: public GameObject
 {
 public:
-	Paddle(int _x, int _y);
+	Paddle(float _x, float _y);
 	virtual void update();
 
-	const int PADDLE_WIDTH = 10;
-	const int PADDLE_HEIGHT = 60;
+	const float PADDLE_WIDTH = 10;
+	const float PADDLE_HEIGHT = 60;
 	void draw(struct SDL_Renderer* renderer) const;
 
 private:
-	int getBottomYCoordinate() const;
+	float getBottomYCoordinate() const;
 };
 

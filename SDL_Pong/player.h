@@ -5,7 +5,7 @@
 class Player: public Paddle
 {
 public:
-	Player(int _x, int _y, class PlayerInputComponent* inputComponent);
+	Player(float _x, float _y, class PlayerInputComponent* inputComponent);
 	~Player();
 	void handleInput(union SDL_Event* sdlEvent);
 	void update();
