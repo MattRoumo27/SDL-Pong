@@ -19,13 +19,15 @@ public:
 	void draw() const;
 	SDL_Window* getWindow() const;
 	SDL_Renderer* getRenderer() const;
-	class Player* getPlayer() const;
 
 	const char* GAME_TITLE = "Pong";
 	static const int WINDOW_WIDTH = 640;
 	static const int WINDOW_HEIGHT = 480;
 
 private:
+	class Paddle* getPlayer() const;
+	Paddle* getEnemy() const;
+
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Event* sdlEvent;

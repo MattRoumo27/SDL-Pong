@@ -142,20 +142,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="aiinputcomponent.cpp" />
     <ClCompile Include="ball.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameobject.cpp" />
+    <ClCompile Include="inputcomponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="paddle.cpp" />
-    <ClCompile Include="player.cpp" />
     <ClCompile Include="playerinputcomponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aiinputcomponent.h" />
     <ClInclude Include="ball.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameobject.h" />
+    <ClInclude Include="inputcomponent.h" />
     <ClInclude Include="paddle.h" />
-    <ClInclude Include="player.h" />
     <ClInclude Include="playerinputcomponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

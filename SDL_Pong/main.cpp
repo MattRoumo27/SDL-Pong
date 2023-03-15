@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <SDL.h>
 #include "game.h"
-#include "player.h"
 
 int main(int argc, char* args[])
 {

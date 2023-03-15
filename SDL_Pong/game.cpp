@@ -2,16 +2,19 @@
 #include <SDL.h>
 #include <stdio.h>
 
-#include "player.h"
 #include "playerinputcomponent.h"
+#include "aiinputcomponent.h"
 #include "ball.h"
 #include "paddle.h"
 
 Game::Game() : renderer(nullptr), window(nullptr), quitGame(false)
 {
-	Player* player = new Player(50, WINDOW_HEIGHT / 2, new PlayerInputComponent());
-	Paddle* enemy = new Paddle(WINDOW_WIDTH - 50, WINDOW_HEIGHT / 2);
+	Paddle* player = new Paddle(Paddle::PADDLE_OFFSET , WINDOW_HEIGHT / 2, new PlayerInputComponent());
+	Paddle* enemy = new Paddle(WINDOW_WIDTH - Paddle::PADDLE_OFFSET, WINDOW_HEIGHT / 2);
 	Ball* ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, player, enemy);
+
+	AIInputComponent* aiInput = new AIInputComponent(ball);
+	enemy->setInputComponent(aiInput);
 
 	gameObjects[PLAYER_INDEX] = player;
 	gameObjects[ENEMY_INDEX] = enemy;
@@ -106,6 +109,7 @@ void Game::handleEventLoop(bool& quitGame) const
 		}
 
 		getPlayer()->handleInput(sdlEvent);
+		getEnemy()->handleInput(sdlEvent);
 	}
 }
 
@@ -140,7 +144,12 @@ SDL_Renderer* Game::getRenderer() const
 	return renderer;
 }
 
-Player* Game::getPlayer() const
+Paddle* Game::getPlayer() const
 {
-	return static_cast<Player*>(gameObjects[PLAYER_INDEX]);
+	return static_cast<Paddle*>(gameObjects[PLAYER_INDEX]);
+}
+
+Paddle* Game::getEnemy() const
+{
+	return static_cast<Paddle*>(gameObjects[ENEMY_INDEX]);
 }

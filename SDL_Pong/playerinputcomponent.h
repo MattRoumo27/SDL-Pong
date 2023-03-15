@@ -1,8 +1,10 @@
 #pragma once
-class PlayerInputComponent
+#include "inputcomponent.h"
+
+class PlayerInputComponent : public InputComponent
 {
 public:
 	PlayerInputComponent();
-	void handleInput(class Player* player, union SDL_Event* sdlEvent);
+	virtual void handleInput(class Paddle* player, union SDL_Event* sdlEvent);
 };
 
