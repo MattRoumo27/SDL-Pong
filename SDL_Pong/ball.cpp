@@ -12,6 +12,12 @@ Ball::Ball(float _x, float _y, Paddle* leftPaddle, Paddle* rightPaddle) : GameOb
 	setInitialSpeed();
 }
 
+void Ball::setInitialSpeed()
+{
+	speedVector.x = RIGHT_DIRECTION * INITIAL_SPEED;
+	speedVector.y = (-3 + (rand() % 3)) * (INITIAL_SPEED / 2);
+}
+
 void Ball::update(double deltaTime)
 {
 	position.x += speedVector.x * (float)deltaTime;
@@ -61,12 +67,26 @@ void Ball::handlePaddleHit(Paddle* paddleHit)
 {
 	if (speedVector.x > 0)
 	{
-		speedVector.x *= -1 * SPEED_MULTIPLIER;
+		if (abs(speedVector.x) > MAXIMUM_SPEED)
+		{
+			speedVector.x *= -1;
+		}
+		else
+		{
+			speedVector.x *= -1 * SPEED_MULTIPLIER;
+		}
 		position.x = paddleHit->position.x - SIDE_LENGTH;
 	}
 	else
 	{
-		speedVector.x *= -1 * SPEED_MULTIPLIER;
+		if (abs(speedVector.x) > MAXIMUM_SPEED)
+		{
+			speedVector.x *= -1;
+		}
+		else
+		{
+			speedVector.x *= -1 * SPEED_MULTIPLIER;
+		}
 		position.x = paddleHit->position.x + Paddle::PADDLE_WIDTH + SIDE_LENGTH;
 	}
 }
@@ -77,12 +97,6 @@ void Ball::reset()
 	position.y = (float)Game::WINDOW_HEIGHT / 2;
 
 	setInitialSpeed();
-}
-
-void Ball::setInitialSpeed()
-{
-	speedVector.x = RIGHT_DIRECTION * INITIAL_BALL_SPEED;
-	speedVector.y = (-3 + (rand() % 3)) * (INITIAL_BALL_SPEED / 2);
 }
 
 void Ball::draw(SDL_Renderer* renderer) const

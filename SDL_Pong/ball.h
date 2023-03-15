@@ -30,7 +30,8 @@ private:
 		DOWN_DIRECTION = 1
 	} BallDirection;
 
-	const float INITIAL_BALL_SPEED = 2000;
+	const float INITIAL_SPEED = 2000;
+	const float MAXIMUM_SPEED = 15000;
 	const float SPEED_MULTIPLIER = 1.1;
 	const float MAX_BOUNCE_ANGLE = 1.309;
 };
