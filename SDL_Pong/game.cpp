@@ -88,6 +88,7 @@ void Game::gameLoop()
 		lag += elapsed;
 
 		handleEventLoop(quitGame);
+		getEnemy()->handleInput(sdlEvent);
 
 		while (lag >= MS_PER_UPDATE)
 		{
@@ -109,7 +110,6 @@ void Game::handleEventLoop(bool& quitGame) const
 		}
 
 		getPlayer()->handleInput(sdlEvent);
-		getEnemy()->handleInput(sdlEvent);
 	}
 }
 

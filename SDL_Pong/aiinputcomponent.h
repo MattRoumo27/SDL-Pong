@@ -9,5 +9,7 @@ public:
 
 private:
 	Ball* ball;
+
+	const float AI_MOVE_SPEED = 1;
 };
 

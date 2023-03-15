@@ -1,18 +1,37 @@
 #include "ball.h"
 #include "paddle.h"
+#include "game.h"
 #include <SDL.h>
 #include <cmath>
+#include <cstdlib>
+
+const float Ball::SIDE_LENGTH = 10;
 
 Ball::Ball(float _x, float _y, Paddle* leftPaddle, Paddle* rightPaddle) : GameObject(_x, _y), leftPaddle(leftPaddle), rightPaddle(rightPaddle)
 {
 	xSpeed = RIGHT_DIRECTION * INITIAL_BALL_SPEED;
-	ySpeed = 0;
+	ySpeed = -3 + (rand() % 3);
 }
 
 void Ball::update()
 {
 	setY(getY() + ySpeed);
 	setX(getX() + xSpeed);
+
+	if (getY() < 0)
+	{
+		setY(0);
+		ySpeed *= -1;
+	}
+	else if ((getY() + SIDE_LENGTH) > Game::WINDOW_HEIGHT)
+	{
+		setY(Game::WINDOW_HEIGHT - SIDE_LENGTH);
+		ySpeed *= -1;
+	}
+	else if (getX() < 0 || (getX() + SIDE_LENGTH) > Game::WINDOW_WIDTH)
+	{
+		reset();
+	}
 
 	// Check for collisions with the paddles
 	Paddle* paddleHit = nullptr;
@@ -41,41 +60,25 @@ bool Ball::hasHitPaddle(Paddle* paddle)
 
 void Ball::handlePaddleHit(Paddle* paddleHit)
 {
-	float directionVectorY = getWhereBallHitPaddle(paddleHit);
-	float directionVectorX = 1;
-
-	float directionVectorLength = sqrt(pow(directionVectorX, 2) + pow(directionVectorY, 2));
-	directionVectorX /= directionVectorLength;
-	directionVectorY /= directionVectorLength;
-
 	if (xSpeed > 0)
 	{
-		xSpeed *= -1;
+		xSpeed *= -1 * SPEED_MULTIPLIER;
 		setX(paddleHit->getX() - SIDE_LENGTH);
 	}
 	else
 	{
-		xSpeed *= -1;
-		setX(paddleHit->getX() + Paddle::PADDLE_WIDTH);
-	}
-
-	xSpeed *= directionVectorX * SPEED_MULTIPLIER;
-
-	if (ySpeed != 0)
-	{
-		ySpeed *= directionVectorY * SPEED_MULTIPLIER;
-	}
-	else
-	{
-		ySpeed = directionVectorY * SPEED_MULTIPLIER;
+		xSpeed *= -1 * SPEED_MULTIPLIER;
+		setX(paddleHit->getX() + Paddle::PADDLE_WIDTH + SIDE_LENGTH);
 	}
 }
 
-float Ball::getWhereBallHitPaddle(Paddle* paddleHit)
+void Ball::reset()
 {
-	float difference = (getY() + SIDE_LENGTH / 2) - (paddleHit->getY() + Paddle::PADDLE_HEIGHT / 2);
+	setX((float)Game::WINDOW_WIDTH / 2);
+	setY((float)Game::WINDOW_HEIGHT / 2);
 
-	return difference / Paddle::PADDLE_HEIGHT;
+	xSpeed = RIGHT_DIRECTION * INITIAL_BALL_SPEED;
+	ySpeed = ySpeed = -3 + (rand() % 3);
 }
 
 void Ball::draw(SDL_Renderer* renderer) const
