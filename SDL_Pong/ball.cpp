@@ -15,7 +15,12 @@ Ball::Ball(float _x, float _y, Paddle* leftPaddle, Paddle* rightPaddle) : GameOb
 void Ball::setInitialSpeed()
 {
 	speedVector.x = RIGHT_DIRECTION * INITIAL_SPEED;
-	speedVector.y = (-3 + (rand() % 3)) * (INITIAL_SPEED / 2);
+	speedVector.y = (-3 + (rand() % 6)) * (INITIAL_SPEED / 2);
+
+	while (speedVector.y == 0)
+	{
+		speedVector.y = (-3 + (rand() % 6)) * (INITIAL_SPEED / 2);
+	}
 }
 
 void Ball::update(double deltaTime)
@@ -23,6 +28,12 @@ void Ball::update(double deltaTime)
 	position.x += speedVector.x * (float)deltaTime;
 	position.y += speedVector.y * (float)deltaTime;
 
+	handleOutOfBounds();
+	handlePaddleCollisions();
+}
+
+void Ball::handleOutOfBounds()
+{
 	if (position.y < 0)
 	{
 		position.y = 0;
@@ -37,8 +48,10 @@ void Ball::update(double deltaTime)
 	{
 		reset();
 	}
+}
 
-	// Check for collisions with the paddles
+void Ball::handlePaddleCollisions()
+{
 	Paddle* paddleHit = nullptr;
 	if (hasHitPaddle(leftPaddle))
 	{
@@ -93,8 +106,9 @@ void Ball::handlePaddleHit(Paddle* paddleHit)
 
 void Ball::reset()
 {
-	position.x = (float)Game::WINDOW_WIDTH / 2;
-	position.y = (float)Game::WINDOW_HEIGHT / 2;
+	resetPosition();
+	leftPaddle->resetPosition();
+	rightPaddle->resetPosition();
 
 	setInitialSpeed();
 }

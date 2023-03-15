@@ -10,6 +10,11 @@ public:
 	virtual void update(double deltaTime);
 	virtual void draw(struct SDL_Renderer* renderer) const;
 
+	void resetPosition();
+
 	PVector position;
+
+private:
+	PVector initialPosition;
 };
 

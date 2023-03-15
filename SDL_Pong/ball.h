@@ -13,6 +13,8 @@ public:
 	void draw(struct SDL_Renderer* renderer) const;
 
 private:
+	void handleOutOfBounds();
+	void handlePaddleCollisions();
 	bool hasHitPaddle(Paddle* paddle);
 	void handlePaddleHit(Paddle* paddleHit);
 	void reset();
