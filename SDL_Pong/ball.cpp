@@ -78,29 +78,21 @@ bool Ball::hasHitPaddle(Paddle* paddle)
 
 void Ball::handlePaddleHit(Paddle* paddleHit)
 {
+	float relativeIntersectY = paddleHit->getCenterYCoordinate() - (position.y + SIDE_LENGTH / 2);
+	float normalizedRelativeIntersectionY = (relativeIntersectY / (Paddle::PADDLE_HEIGHT / 2)) * (3.1479 / 2 - MAX_BOUNCE_ANGLE);
+	float bounceAngle = normalizedRelativeIntersectionY * MAX_BOUNCE_ANGLE;
+
 	if (speedVector.x > 0)
 	{
-		if (abs(speedVector.x) > MAXIMUM_SPEED)
-		{
-			speedVector.x *= -1;
-		}
-		else
-		{
-			speedVector.x *= -1 * SPEED_MULTIPLIER;
-		}
+		speedVector.x = SPEED_MULTIPLIER * speedVector.getLength() * cos(bounceAngle) * -1;
+		speedVector.y = SPEED_MULTIPLIER * speedVector.getLength() * sin(bounceAngle) * -1;
 		position.x = paddleHit->position.x - SIDE_LENGTH;
 	}
 	else
 	{
-		if (abs(speedVector.x) > MAXIMUM_SPEED)
-		{
-			speedVector.x *= -1;
-		}
-		else
-		{
-			speedVector.x *= -1 * SPEED_MULTIPLIER;
-		}
-		position.x = paddleHit->position.x + Paddle::PADDLE_WIDTH + SIDE_LENGTH;
+		speedVector.x = SPEED_MULTIPLIER * speedVector.getLength() * cos(bounceAngle);
+		speedVector.y = SPEED_MULTIPLIER * speedVector.getLength() * -sin(bounceAngle);
+		position.x = paddleHit->getRightXCoordinate() + SIDE_LENGTH;
 	}
 }
 

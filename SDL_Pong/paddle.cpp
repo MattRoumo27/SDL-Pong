@@ -46,6 +46,16 @@ float Paddle::getBottomYCoordinate() const
 	return position.y + PADDLE_HEIGHT;
 }
 
+float Paddle::getRightXCoordinate() const
+{
+	return position.x + PADDLE_WIDTH;
+}
+
+float Paddle::getCenterYCoordinate() const
+{
+	return position.y + (PADDLE_HEIGHT / 2);
+}
+
 void Paddle::draw(SDL_Renderer* renderer) const
 {
 	SDL_Rect paddleRectangle = { position.x, position.y, PADDLE_WIDTH, PADDLE_HEIGHT };

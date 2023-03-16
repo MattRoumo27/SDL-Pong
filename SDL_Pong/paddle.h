@@ -13,6 +13,9 @@ public:
 	void handleInput(double deltaTime);
 	void draw(struct SDL_Renderer* renderer) const;
 
+	float getCenterYCoordinate() const;
+	float getRightXCoordinate() const;
+
 	static const float PADDLE_WIDTH;
 	static const float PADDLE_HEIGHT;
 	static const float PADDLE_OFFSET;
