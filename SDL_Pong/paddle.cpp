@@ -17,6 +17,7 @@ Paddle::Paddle(float _x, float _y, class InputComponent* inputComponent) : GameO
 Paddle::~Paddle()
 {
 	delete inputComponent;
+	inputComponent = nullptr;
 }
 
 void Paddle::update(double deltaTime)

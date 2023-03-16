@@ -13,6 +13,9 @@ GameObject::GameObject(float _x, float _y)
 	initialPosition = position;
 }
 
+GameObject::~GameObject()
+{ }
+
 void GameObject::update(double deltaTime)
 { }
 
