@@ -6,7 +6,7 @@
 const float Paddle::PADDLE_WIDTH = 10;
 const float Paddle::PADDLE_HEIGHT = 60;
 const float Paddle::PADDLE_OFFSET = 50;
-const float Paddle::MOVE_SPEED = 300.f;
+const float Paddle::MOVE_SPEED = 0.3;
 
 Paddle::Paddle(float _x, float _y) : GameObject(_x, _y), inputComponent(nullptr)
 { }

@@ -6,6 +6,7 @@
 #include "aiinputcomponent.h"
 #include "ball.h"
 #include "paddle.h"
+#include <iostream>
 
 Game::Game() : renderer(nullptr), window(nullptr), quitGame(false)
 {
@@ -60,7 +61,7 @@ bool Game::initializeSDLSystems()
 		}
 		else
 		{
-			renderer = SDL_CreateRenderer(window, 01, SDL_RENDERER_ACCELERATED);
+			renderer = SDL_CreateRenderer(window, 01, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 			if (renderer == nullptr)
 			{
 				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
@@ -79,24 +80,26 @@ bool Game::initializeSDLSystems()
 void Game::gameLoop()
 {
 	double previous = SDL_GetTicks64();
-	double lag = 0.0;
+	double totalElapsed = 0.0f;
 	while (!quitGame)
 	{
 		double current = SDL_GetTicks64();
 		double elapsed = current - previous;
 		previous = current;
-		lag += elapsed;
 
-		double deltaTime = elapsed / 1000.0f;
-		handleEventLoop(quitGame, deltaTime);
+		handleEventLoop(quitGame, elapsed);
+		update(elapsed);
+		totalElapsed += elapsed;
 
-		while (lag >= MS_PER_UPDATE)
+		if (totalElapsed > MS_PER_UPDATE)
 		{
-			update(deltaTime);
-			lag -= MS_PER_UPDATE;
+			draw();
+			totalElapsed -= MS_PER_UPDATE;
+			if (totalElapsed > MS_PER_UPDATE)
+			{
+				std::cout << "Performance warning, rendering or update took too long" << std::endl;
+			}
 		}
-
-		draw();
 	}
 }
 
