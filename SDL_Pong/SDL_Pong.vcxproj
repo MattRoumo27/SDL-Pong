@@ -168,7 +168,6 @@
     <ClInclude Include="paddle.h" />
     <ClInclude Include="playerinputcomponent.h" />
     <ClInclude Include="pvector.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="scoreboard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

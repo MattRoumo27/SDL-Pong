@@ -76,9 +76,6 @@
     <ClInclude Include="scoreboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="gameevent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
