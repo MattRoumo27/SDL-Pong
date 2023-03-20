@@ -6,6 +6,7 @@
 #include "aiinputcomponent.h"
 #include "ball.h"
 #include "paddle.h"
+#include "scoreboard.h"
 #include <iostream>
 
 Game::Game() : renderer(nullptr), window(nullptr), quitGame(false)
@@ -20,6 +21,9 @@ Game::Game() : renderer(nullptr), window(nullptr), quitGame(false)
 	gameObjects[PLAYER_INDEX] = player;
 	gameObjects[ENEMY_INDEX] = enemy;
 	gameObjects[BALL_INDEX] = ball;
+
+	scoreboard = new Scoreboard();
+	ball->addObserver(scoreboard);
 
 	sdlEvent = new SDL_Event;
 }
@@ -39,6 +43,7 @@ Game::~Game()
 		gameObjects[i] = nullptr;
 	}
 
+	delete scoreboard;
 	delete sdlEvent;
 }
 

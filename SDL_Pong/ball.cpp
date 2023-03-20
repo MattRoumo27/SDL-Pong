@@ -4,12 +4,17 @@
 #include <SDL.h>
 #include <cmath>
 #include <cstdlib>
+#include "observer.h"
 
 const float Ball::SIDE_LENGTH = 10;
 
 Ball::Ball(float _x, float _y, Paddle* leftPaddle, Paddle* rightPaddle) : GameObject(_x, _y), leftPaddle(leftPaddle), rightPaddle(rightPaddle)
 {
 	setInitialSpeed();
+	for (int i = 0; i < MAX_OBSERVERS; i++)
+	{
+		observers[i] = nullptr;
+	}
 }
 
 void Ball::setInitialSpeed()
@@ -46,6 +51,14 @@ void Ball::handleOutOfBounds()
 	}
 	else if (position.x < 0 || (position.x + SIDE_LENGTH) > Game::WINDOW_WIDTH)
 	{
+		if (position.x < 0)
+		{
+			notifyObservers(GameEvent::RIGHT_PADDLE_SCORED);
+		}
+		else
+		{
+			notifyObservers(GameEvent::LEFT_PADDLE_SCORED);
+		}
 		reset();
 	}
 }
@@ -93,6 +106,30 @@ void Ball::handlePaddleHit(Paddle* paddleHit)
 		speedVector.x = SPEED_MULTIPLIER * speedVector.getLength() * cos(bounceAngle);
 		speedVector.y = SPEED_MULTIPLIER * speedVector.getLength() * -sin(bounceAngle);
 		position.x = paddleHit->getRightXCoordinate() + SIDE_LENGTH;
+	}
+}
+
+
+void Ball::notifyObservers(GameEvent gameEvent)
+{
+	for (int i = 0; i < MAX_OBSERVERS; i++)
+	{
+		if (observers[i] != nullptr)
+		{
+			observers[i]->onNotify(gameEvent);
+		}
+	}
+}
+
+void Ball::addObserver(Observer* observer)
+{
+	for (int i = 0; i < MAX_OBSERVERS; i++)
+	{
+		if (observers[i] == nullptr)
+		{
+			observers[i] = observer;
+			break;
+		}
 	}
 }
 

@@ -2,6 +2,10 @@
 
 #include "gameobject.h"
 #include "pvector.h"
+#include "gameevent.h"
+
+// Increase this to add more observers
+const int MAX_OBSERVERS = 1;
 
 class Ball: public GameObject
 {
@@ -11,6 +15,11 @@ public:
 
 	static const float SIDE_LENGTH;
 	void draw(struct SDL_Renderer* renderer) const;
+
+	void addObserver(class Observer* observer);
+
+protected:
+	void notifyObservers(GameEvent gameEvent);
 
 private:
 	void handleOutOfBounds();
@@ -23,6 +32,7 @@ private:
 	PVector speedVector;
 	Paddle* leftPaddle;
 	Paddle* rightPaddle;
+	Observer* observers[MAX_OBSERVERS];
 
 	typedef enum
 	{

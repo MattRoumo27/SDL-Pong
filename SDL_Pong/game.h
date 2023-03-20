@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gameobject.h"
+#include "scoreboard.h"
 #include <SDL.h>
 
 // Player paddle, enemy paddle, and the ball
@@ -31,6 +32,7 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Event* sdlEvent;
+	Scoreboard* scoreboard;
 	GameObject* gameObjects[NUMBER_OF_GAME_OBJECTS];
 	bool quitGame;
 	const float MS_PER_UPDATE = 10;

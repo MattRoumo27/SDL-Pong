@@ -151,19 +151,28 @@
     <ClCompile Include="gameobject.cpp" />
     <ClCompile Include="inputcomponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="observer.cpp" />
     <ClCompile Include="paddle.cpp" />
     <ClCompile Include="playerinputcomponent.cpp" />
     <ClCompile Include="pvector.cpp" />
+    <ClCompile Include="scoreboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aiinputcomponent.h" />
     <ClInclude Include="ball.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gameevent.h" />
     <ClInclude Include="gameobject.h" />
     <ClInclude Include="inputcomponent.h" />
+    <ClInclude Include="observer.h" />
     <ClInclude Include="paddle.h" />
     <ClInclude Include="playerinputcomponent.h" />
     <ClInclude Include="pvector.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="scoreboard.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SDL_Pong.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
